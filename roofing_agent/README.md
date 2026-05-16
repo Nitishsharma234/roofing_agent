@@ -1,109 +1,71 @@
 # 🏠 Roofing AI Agent
 
-An **Agentic AI Chatbot** that answers roofing questions by scraping and synthesizing content from **FeedSpot's Top 100 Roofing Blogs 2026**.
+A smart chatbot that answers roofing questions by reading real roofing websites and using AI to give you a proper answer.
 
 ---
 
-## 🚀 Quick Start
+## What We Used
 
-### 1. Install Dependencies
+| Tool | What it does |
+|------|-------------|
+| **Streamlit** | Builds the chat interface you see in the browser |
+| **Groq API** | Runs the AI brain (LLaMA 3.3 70B model) — fast and free |
+| **BeautifulSoup** | Reads and extracts text from roofing websites |
+| **Requests** | Fetches the web pages from the internet |
+| **Python** | The language everything is written in |
+
+---
+
+## How It Works (Step by Step)
+
+1. **You type a question** — like *"How much does a metal roof cost?"*
+
+2. **Small-talk check** — if you just say "hi" or "thanks", the bot replies casually without wasting any API calls.
+
+3. **Pick the best sources** — the app picks the 8 most relevant roofing blogs from a list of 40 top sources.
+
+4. **Scrape the websites** — it visits those websites and grabs the text content (up to 3000 characters each).
+
+5. **Send to AI** — the scraped text + your question are sent to Groq's LLaMA model.
+
+6. **Get the answer** — the AI reads the content and writes a clear, structured answer for you.
+
+7. **Show sources** — the websites that were used are shown as clickable links below the answer.
+
+---
+
+## File Structure
+
+```
+app.py       → Main app — handles the chat UI and ties everything together
+scraper.py   → Fetches web pages and calls the Groq AI
+styles.py    → All the CSS styling (dark theme, colors, fonts)
+```
+
+---
+
+## How to Run
+
 ```bash
-pip install -r requirements.txt
-```
+# Install dependencies
+pip install streamlit groq requests beautifulsoup4
 
-### 2. Set Gemini API Key
-Get your free API key from: https://aistudio.google.com/app/apikey
+# Set your Groq API key
+export GROQ_API_KEY=your_key_here
 
-**Windows (CMD):**
-```cmd
-set GEMINI_API_KEY=your_api_key_here
-```
-
-**Windows (PowerShell):**
-```powershell
-$env:GEMINI_API_KEY = "your_api_key_here"
-```
-
-**Mac/Linux:**
-```bash
-export GEMINI_API_KEY=your_api_key_here
-```
-
-### 3. Run the App
-```bash
+# Run the app
 streamlit run app.py
 ```
 
-The app will open at **http://localhost:8501**
+Then open `http://localhost:8501` in your browser.
 
 ---
 
-## 🧠 How It Works (Agentic Architecture)
+## Key Features
 
-```
-User Question
-      ↓
-[Step 1] Blog Selection
-   • Scores all 40 roofing blogs by keyword relevance
-   • Selects top 6 most relevant sources
-
-      ↓
-[Step 2] Web Scraping (BeautifulSoup)
-   • Visits each selected blog URL
-   • Extracts clean text content
-   • Removes nav, footer, scripts
-
-      ↓
-[Step 3] AI Synthesis (Claude Sonnet)
-   • Passes scraped content as context
-   • Claude answers using ONLY those sources
-   • Returns structured answer with citations
-
-      ↓
-Answer + Sources Displayed in Chat
-```
-
----
-
-## 📚 Source Blogs
-All 40+ roofing blogs are from **FeedSpot's Top 100 Roofing Blogs 2026**:
-- GAF Roofing Blog
-- Owens Corning
-- IKO Roofing
-- Roofing Contractor Magazine
-- This Old House – Roofing
-- Bob Vila – Roofing
-- Forbes Home Roofing
-- Metal Roofing Alliance
-- NRCA Blog
-- ... and 30+ more
-
----
-
-## 💡 Example Questions
-- "What is the best roofing material for hot climates?"
-- "How much does a roof replacement cost in 2026?"
-- "Metal roof vs asphalt shingles — which is better?"
-- "How do I fix a roof leak myself?"
-- "What are signs I need a new roof?"
-- "How long does an asphalt shingle roof last?"
-
----
-
-## 🛠️ Tech Stack
-| Component | Technology |
-|-----------|------------|
-| UI | Streamlit |
-| Web Scraping | BeautifulSoup4 + Requests |
-| AI Model | Gemini 2.5 Flash (Google) |
-| Agentic Loop | Custom Python |
-
----
-
-## 📁 File Structure
-```
-roofing_agent/
-├── app.py           ← Main Streamlit application
-├── requirements.txt ← Python dependencies
-└── README.md        ← This file
-```
+- 💬 Chat-style interface with message history
+- 🔍 Searches 40+ real roofing blogs live
+- 🤖 Powered by LLaMA 3.3 70B via Groq
+- 🚫 Smart filter to skip non-roofing / small-talk messages
+- 📚 Shows clickable source links for every answer
+- 🎨 Clean dark UI with sidebar example questions
